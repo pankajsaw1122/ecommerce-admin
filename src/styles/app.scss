@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.alert-messages {
+    display: flex;
+
+    .success {
+        color: #3c763d;
+        margin-top: 12px;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+        text-align: left;
+        padding: 3px 10px;
+        border-radius: 4px;
+        text-align: left;
+        margin-bottom: 8px;
+        display: block;
+    }
+    .error {
+        color: #a94442;
+        margin-top: 12px;        
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        text-align: left;
+        padding: 3px 10px;
+        border-radius: 4px;
+        text-align: left;
+        margin-bottom: 8px;
+        display: block;
+    }
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #17a2b8 !important;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #17a2b8;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #17a2b8;
+}

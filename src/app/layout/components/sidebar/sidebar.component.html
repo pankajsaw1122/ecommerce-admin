@@ -1,0 +1,98 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <mat-nav-list class="bord-btm" role="navigation">
+        <a mat-list-item routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
+            <mat-icon>dashboard</mat-icon>
+            &nbsp;&nbsp; Dashboard
+        </a>
+    </mat-nav-list>
+    <mat-accordion>
+        <mat-expansion-panel class="bord-btm">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="left-pad">
+                    <mat-icon class="mat-icon-custom">desktop_mac</mat-icon> &nbsp;&nbsp;<span class="expand-button"> Products</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list role="navigation">
+                <a mat-list-item style="font-size:12px" routerLink="/products/products-list" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">view_list</mat-icon>
+                    &nbsp;&nbsp; All Products
+                </a>
+                <a mat-list-item style="font-size:12px" [routerLink]="['/products/add-products']" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">add</mat-icon>&nbsp;&nbsp; Add New
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+        <mat-expansion-panel class="bord-btm">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="left-pad">
+                    <mat-icon class="mat-icon-custom">desktop_mac</mat-icon> &nbsp;&nbsp;<span class="expand-button"> Categories </span> 
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list role="navigation">
+                <a mat-list-item style="font-size:12px" routerLink="/categories/categories-list" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">view_list</mat-icon>
+                    &nbsp;&nbsp; Categories
+                </a>
+                <a mat-list-item style="font-size:12px" [routerLink]="['/categories/add-categories']" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">add</mat-icon>&nbsp;&nbsp; Add New
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+        <mat-expansion-panel class="bord-btm">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="left-pad">
+                    <mat-icon class="mat-icon-custom">desktop_mac</mat-icon> &nbsp;&nbsp;<span class="expand-button"> Tags </span> 
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list role="navigation">
+                <a mat-list-item style="font-size:12px" routerLink="/tags/tags-list" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">view_list</mat-icon>
+                    &nbsp;&nbsp; Tags
+                </a>
+                <a mat-list-item style="font-size:12px" [routerLink]="['/tags/add-tags']" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">add</mat-icon>&nbsp;&nbsp; Add New
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+        <mat-expansion-panel class="bord-btm">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="left-pad">
+                    <mat-icon class="mat-icon-custom">desktop_mac</mat-icon> &nbsp;&nbsp;<span class="expand-button"> Coupans </span> 
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list role="navigation">
+                <a mat-list-item style="font-size:12px" routerLink="/coupans/coupans-list" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">view_list</mat-icon>
+                    &nbsp;&nbsp; Coupans
+                </a>
+                <a mat-list-item style="font-size:12px" [routerLink]="['/coupans/add-coupans']" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">add</mat-icon>&nbsp;&nbsp; Add New
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+        <mat-expansion-panel class="bord-btm">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="left-pad">
+                    <mat-icon class="mat-icon-custom">desktop_mac</mat-icon> &nbsp;&nbsp;<span class="expand-button"> Settings </span> 
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-nav-list role="navigation">
+                <a mat-list-item style="font-size:12px" routerLink="/student-list" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">view_list</mat-icon>
+                    &nbsp;&nbsp; Sign in
+                </a>
+                <a mat-list-item style="font-size:12px" [routerLink]="['/admission']" [routerLinkActive]="['router-link-active']">
+                    <mat-icon class="mat-icon-custom">payment</mat-icon>&nbsp;&nbsp; Sign Out
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+</nav>
