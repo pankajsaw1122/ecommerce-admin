@@ -66,3 +66,112 @@
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     background-color: #17a2b8 !important;
 }
+
+.mat-tab-label {
+    min-width: 148px !important;
+ 
+}
+
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+    min-width: 148px !important; 
+}
+
+.tab-content {
+   margin-top: 32px;
+}
+.control-label {
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.help-cont {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* helptip */
+.help-tip{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    background-color: #BCDBEA;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 26px;
+    cursor: default;
+}
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{    /* The tooltip */
+    display: none;
+    text-align: center;
+    background-color: #1E2021;
+    padding: 11px;
+    width: 300px;
+    position: absolute;
+    z-index: 1;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    color: #FFF;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#1E2021;
+    left:10px;
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top: -5px;
+    left: 100px;
+}
+
+.next-btn {
+    margin-top: 12px;
+    text-align: center;
+}
+.card-marg {
+    margin: 18px;
+}
+.tab-pad {
+    padding: 24px 6px;
+}
+.sbt-btn-div {
+    text-align: center;
+    margin: auto;
+    padding-top: 28px;
+}
+
+button.sbt-btn.mat-raised-button.mat-primary {
+    min-width: 160px;
+    padding: 2px;
+}

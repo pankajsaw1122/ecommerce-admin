@@ -1,16 +1,426 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Products'" [subHeading]="'Add Products'" [icon]="'fa-edit'"></app-page-header>
- <div class="head"><h3>Products</h3></div>
-  <div class="row form-outer">
-      <div class="card">
-          <div class="card-block">
-            <mat-tab-group>
-                <mat-tab label="First"> Content 1 </mat-tab>
-                <mat-tab label="Second"> Content 2 </mat-tab>
-                <mat-tab label="Third"> Content 3 </mat-tab>
-              </mat-tab-group>
-          </div>
-      </div>
-      <br>
-  </div>
+    <app-page-header [heading]="'Products'" [subHeading]="'Add Products'" [icon]="'fa-edit'"></app-page-header>
+    <div class="head">
+        <h3>Products</h3>
+    </div>
+    <div class="row form-outer">
+        <div class="card">
+            <div class="card-block">
+                <mat-tab-group [(selectedIndex)]="selectedTab">
+                    <mat-tab label="General">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="form-content">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="product_id">Product Id</label>
+                                            <div class="col-md-4">
+                                                <input id="product_id" name="product_id" placeholder="PRODUCT ID" class="form-control input-md" required="" type="text">
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="product_name">Product Name</label>
+                                            <div class="col-md-4">
+                                                <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="product_categorie">Product Category</label>
+                                            <div class="col-md-4">
+                                                <select id="product_categorie" name="product_categorie" class="form-control">
+                                                    <option>Select Category</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Select Basic -->
+                                        <div class="form-group row ">
+                                            <label class="col-md-4 control-label" for="product_brand">Product Brand</label>
+                                            <div class="col-md-4">
+                                                <select id="product_brand" name="product_brand" class="form-control">
+                                                    <option>Select Brand</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Textarea -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="product_description">Product Description</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="product_description" name="product_description"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Textarea -->
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Price">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="regular_price">Regular Price ($)</label>
+                                            <div class="col-md-4">
+                                                <input id="regular_price" name="regular_price" placeholder="REGULAR PRICE" class="form-control input-md" required="" type="text">
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="sale_price">Sale Price ($)</label>
+                                            <div class="col-md-4">
+                                                <input id="sale_price" name="sale_price" placeholder="SALE PRICE" class="form-control input-md" required="" type="text">
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="tax_status">Tax Status</label>
+                                            <div class="col-md-4">
+                                                <select id="tax_status" name="tax_status" class="form-control">
+                                                    <option>Select</option>
+                                                    <option>Taxable</option>
+                                                    <option>Shipping Only</option>
+                                                    <option>None</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Define whether or not the entire product is taxable, or just the cost
+                                                        of shipping it.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="tax_class">Tax Class</label>
+                                            <div class="col-md-4">
+                                                <select id="tax_class" name="tax_class" class="form-control">
+                                                    <option>Select</option>
+                                                    <option>Standard</option>
+                                                    <option>Reduced Rate</option>
+                                                    <option>Zero Rate</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Choose a tax class for this product. Tax class are used to apply different
+                                                        tax rates specific to certain types of product.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Inventory">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="vertical_post check_box_agile">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="sku">SKU</label>
+                                            <div class="col-md-4">
+                                                <input id="sku" name="sku" placeholder="" class="form-control input-md" required="" type="text">
+
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>SKU refers to a Stock-Keeping unit. A unique identifier for each distinct
+                                                        product and service that can be purchased.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Checkbox-->
+                                        <div class="form-group row" style="margin-bottom: 35px;">
+                                            <label class="col-md-4 control-label" for="manage_stock">Manage Stock? </label>
+                                            <div class="col-md-4" style="display: flex; font-size: 12px;">
+                                                <mat-checkbox> <i>Enable stock management at product level</i></mat-checkbox>
+                                            </div>
+                                        </div>
+
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="stock_status">Stock Status</label>
+                                            <div class="col-md-4">
+                                                <select id="stock_status" name="stock-status" class="form-control">
+                                                    <option>Select</option>
+                                                    <option>In Stock</option>
+                                                    <option>Out Of Stock</option>
+                                                    <option>On Backorder</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Controls whether or not the product is listed as "In Stock" or "Out
+                                                        Of Stock" on the frontend.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Checkbox-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="slod_individually">Sold Individually
+                                            </label>
+                                            <div class="col-md-4" style="display: flex; font-size: 12px;">
+                                                <mat-checkbox> <i>Enable this to only of this item to be bought in a single
+                                                        order
+                                                    </i></mat-checkbox>
+
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Shipping">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="vertical_post check_box_agile">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="weight">Weight (Kg)</label>
+                                            <div class="col-md-4">
+                                                <input id="weight" name="weight" placeholder="0" class="form-control input-md" required="" type="text">
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Weight in decimal form.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="dimensions">Dimensions (cm)</label>
+                                            <div class="col-md-4" style="display:flex;">
+                                                <input id="dimensions" name="dimensions" placeholder="LENGTH" class="form-control input-md" style="width:32%;margin-right:5px;"
+                                                    required="" type="text">
+                                                <input id="dimensions" name="dimensions" placeholder="WIDTH" class="form-control input-md" style="width:32%;margin-right:5px;"
+                                                    required="" type="text">
+                                                <input id="dimensions" name="dimensions" placeholder="HEIGHT" class="form-control input-md" style="width:32%;" required=""
+                                                    type="text">
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>LxWxH in decimal form.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="shipping_class">Shipping Class</label>
+                                            <div class="col-md-4">
+                                                <select id="shipping_class" name="shipping_class" class="form-control">
+                                                    <option>No Shipping Class</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Shipping classes are used by certain shipping methods to group similar
+                                                        products.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Linked Products">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="vertical_post check_box_agile">
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="upsells">Upsells</label>
+                                            <div class="col-md-4">
+                                                <input id="upsells" name="upsells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md" required="" type="text">
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Upsells are the products which you recommend instead of the currently
+                                                        viewed product, for example,products that are more profitable or
+                                                        better quality or more expensive.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Text input-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="cross_sells">Cross-Sells</label>
+                                            <div class="col-md-4">
+                                                <input id="cross_sells" name="cross_sells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md" required="" type="text">
+                                            </div>
+                                            <div class="col-1 help-cont">
+                                                <div class="help-tip">
+                                                    <p>Cross-sells are product which you promote in the cart, based on the
+                                                        current product.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Attributes">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="vertical_post check_box_agile">
+                                        <!-- Textarea -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="long_desc">Long Description</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="long_desc" name="long_desc"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Textarea -->
+
+                                        <!-- Textarea -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="add-info">Additional Information</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="add-info" name="add-info"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Textarea -->
+
+                                        <!-- Textarea -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="help">Help</label>
+                                            <div class="col-md-4">
+                                                <textarea class="form-control" id="help" name="help"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Textarea -->
+
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Next</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Tags">
+                        <div class="tab-content">
+                            <form class="form-horizontal container">
+                                <fieldset>
+                                    <div class="vertical_post check_box_agile">
+
+                                        <!-- Select Basic -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="product_categorie">Tags</label>
+                                            <div class="col-md-4">
+                                                <select id="product_categorie" name="product_categorie" class="form-control">
+                                                    <option>Select Tag</option>
+                                                    <option>New</option>
+
+                                                    <option>Off</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Button -->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <div class="col-md-4 next-btn">
+                                                <button mat-raised-button color="primary">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+        <br />
+
+        <div class="card card-marg">
+            <div class="card-block">
+                <div class="tab-pad">
+                    <form class="form-horizontal container">
+                        <fieldset>
+                            <!-- File Button -->
+                            <div class="form-group row">
+                                <label class="col-md-4 control-label" for="filebutton">Main Image</label>
+                                <div class="col-md-4">
+                                    <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                </div>
+                            </div>
+                            <!-- File Button -->
+                            <div class="form-group row">
+                                <label class="col-md-4 control-label" for="filebutton">Auxilary Images</label>
+                                <div class="col-md-4">
+                                    <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                </div>
+                            </div>
+                            <!-- //product-image// -->
+
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="sbt-btn-div">
+                <button mat-raised-button color="primary" class="sbt-btn">Submit</button>
+        </div>
+    </div>
 </div>

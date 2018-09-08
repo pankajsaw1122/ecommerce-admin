@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../shared/services/api.service';
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'app-add-products',
   templateUrl: './add-products.component.html',
   styleUrls: ['./add-products.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [routerTransition()]
 })
 export class AddProductsComponent implements OnInit {
@@ -16,6 +17,7 @@ export class AddProductsComponent implements OnInit {
   imageId: String;
   upload = null;
   submitSuccess = null;
+  selectedTab: Number = 0;
   constructor(private apiService: ApiService, private router: Router) { }
 
   ngOnInit() {
