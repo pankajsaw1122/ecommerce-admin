@@ -9,54 +9,71 @@
                 <mat-tab-group [(selectedIndex)]="selectedTab">
                     <mat-tab label="General">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form class="form-horizontal container" [formGroup]="generalForm" (ngSubmit)="generalSubmit()">
                                 <fieldset>
                                     <div class="form-content">
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="product_id">Product Id</label>
+                                            <label class="col-md-4 control-label"> Department<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <input id="product_id" name="product_id" placeholder="PRODUCT ID" class="form-control input-md" required="" type="text">
-                                            </div>
-                                        </div>
-
-                                        <!-- Text input-->
-                                        <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="product_name">Product Name</label>
-                                            <div class="col-md-4">
-                                                <input id="product_name" name="product_name" placeholder="PRODUCT NAME" class="form-control input-md" required="" type="text">
-                                            </div>
-                                        </div>
-                                        <!-- Select Basic -->
-                                        <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="product_categorie">Product Category</label>
-                                            <div class="col-md-4">
-                                                <select id="product_categorie" name="product_categorie" class="form-control">
-                                                    <option>Select Category</option>
+                                                <select id="departmentId" formControlName="departmentId" (change)="onDepartemntChange($event.target.value)"
+                                                    class="form-control">
+                                                    <option value="0"> Select Department</option>
+                                                    <option *ngFor="let dpt of departmentsList" [value]="dpt.id">{{dpt.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label"> Category<span class="error"> *</span></label>
+                                            <div class="col-md-4">
+                                                <select id="subDepartmentId" formControlName="subDepartmentId" (change)="onSubDepartemntChange($event.target.value)"
+                                                    placeholder="Select" class="form-control">
+                                                    <option value="0"> Select Category </option>
+                                                    <option *ngFor="let sdt of subDepartmentsList" [value]="sdt.id">{{sdt.name}}</option>
+                                                </select> </div>
+                                        </div>
+
+                                        <div *ngIf="subCategoriesList != ''" class="form-group row">
+                                            <label class="col-md-4 control-label"> Sub Category<span class="error"> *</span></label>
+                                            <div class="col-md-4">
+                                                <select id="subCategoryId" formControlName="subCategoryId" class="form-control">
+                                                    <option value="0">Select Sub Category</option>
+                                                    <option *ngFor="let sc of subCategoriesList" [value]="sc.id">{{sc.name}}</option>
+                                                </select> </div>
+                                        </div>
+                                        <!-- Text input-->
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label">Product Name<span class="error"> *</span> </label>
+                                            <div class="col-md-4">
+                                                <input id="productName" formControlName="productName" placeholder="PRODUCT NAME"
+                                                    class="form-control input-md" type="text">
+                                            </div>
+                                            <!-- <span *ngIf="!generalForm.get('productName').valid && generalForm.get('productName').touched">Please enter product name</span> -->
+                                        </div>
                                         <!-- Select Basic -->
                                         <div class="form-group row ">
-                                            <label class="col-md-4 control-label" for="product_brand">Product Brand</label>
+                                            <label class="col-md-4 control-label">Product Brand</label>
                                             <div class="col-md-4">
-                                                <select id="product_brand" name="product_brand" class="form-control">
-                                                    <option>Select Brand</option>
+                                                <select id="brandId" formControlName="brandId" class="form-control">
+                                                    <option value="0">Select Brand</option>
+                                                    <option *ngFor="let bd of brandsList" [value]="bd.id">{{bd.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <!-- Textarea -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="product_description">Product Description</label>
+                                            <label class="col-md-4 control-label">Product Description</label>
                                             <div class="col-md-4">
-                                                <textarea class="form-control" id="product_description" name="product_description"></textarea>
+                                                <textarea id="description" formControlName="description" class="form-control"></textarea>
                                             </div>
                                         </div>
                                         <!-- Textarea -->
                                         <!-- Button -->
+                                        <p *ngIf="!formValid" class="error">*Please fill all required fields</p>
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -64,25 +81,23 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Price">
+                    <mat-tab label="Price" [disabled]="priceTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form [formGroup]="priceForm" (ngSubmit)="priceSubmit()" class="form-horizontal container">
                                 <fieldset>
                                     <div class="">
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="regular_price">Regular Price ($)</label>
+                                            <label class="col-md-4 control-label">Regular Price ($)<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <input id="regular_price" name="regular_price" placeholder="REGULAR PRICE" class="form-control input-md" required="" type="text">
-
+                                                <input id="regularPrice" formControlName="regularPrice" placeholder="REGULAR PRICE" class="form-control input-md" required="" type="number">
                                             </div>
                                         </div>
 
                                         <!-- Text input-->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="sale_price">Sale Price ($)</label>
+                                            <label class="col-md-4 control-label" for="sale_price">Sale Price ($)<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <input id="sale_price" name="sale_price" placeholder="SALE PRICE" class="form-control input-md" required="" type="text">
-
+                                                <input id="salePrice" formControlName="salePrice" placeholder="SALE PRICE" class="form-control input-md" type="number">
                                             </div>
                                         </div>
 
@@ -90,17 +105,14 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="tax_status">Tax Status</label>
                                             <div class="col-md-4">
-                                                <select id="tax_status" name="tax_status" class="form-control">
-                                                    <option>Select</option>
-                                                    <option>Taxable</option>
-                                                    <option>Shipping Only</option>
-                                                    <option>None</option>
+                                                <select id="taxStatusId" formControlName="taxStatusId" class="form-control">
+                                                    <option value="0">Select</option>
+                                                    <option *ngFor="let tsl of taxStatusList" [value]="tsl.id">{{tsl.name}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Define whether or not the entire product is taxable, or just the cost
-                                                        of shipping it.</p>
+                                                    <p>Define whether or not the entire product is taxable, or just the cost of shipping it.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,26 +122,24 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="tax_class">Tax Class</label>
                                             <div class="col-md-4">
-                                                <select id="tax_class" name="tax_class" class="form-control">
-                                                    <option>Select</option>
-                                                    <option>Standard</option>
-                                                    <option>Reduced Rate</option>
-                                                    <option>Zero Rate</option>
+                                                <select id="taxClassId" formControlName="taxClassId" class="form-control">
+                                                    <option value="0">Select</option>
+                                                    <option *ngFor="let tcl of taxClassList" [value]="tcl.id">{{tcl.name}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Choose a tax class for this product. Tax class are used to apply different
-                                                        tax rates specific to certain types of product.
-                                                    </p>
+                                                    <p>Choose a tax class for this product. Tax class are used to apply different tax rates specific to certain types of product.</p>
                                                 </div>
                                             </div>
                                         </div>
+                                        <p *ngIf="!formValid" class="error">*Please fill all required fields</p>
+
                                         <!-- Button -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <label class="col-md-4 control-label" ></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -137,47 +147,49 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Inventory">
+                    <mat-tab label="Inventory" [disabled]="inventoryTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form [formGroup]="inventoryForm" (ngSubmit)="inventorySubmit()" class="form-horizontal container">
                                 <fieldset>
                                     <div class="vertical_post check_box_agile">
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="sku">SKU</label>
+                                            <label class="col-md-4 control-label">SKU</label>
                                             <div class="col-md-4">
-                                                <input id="sku" name="sku" placeholder="" class="form-control input-md" required="" type="text">
+                                                <input id="sku" formControlName="sku" placeholder="SKU" class="form-control input-md"
+                                                    required="" type="text">
 
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>SKU refers to a Stock-Keeping unit. A unique identifier for each distinct
+                                                    <p>SKU refers to a Stock-Keeping unit. A unique identifier for each
+                                                        distinct
                                                         product and service that can be purchased.</p>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Checkbox-->
-                                        <div class="form-group row" style="margin-bottom: 35px;">
-                                            <label class="col-md-4 control-label" for="manage_stock">Manage Stock? </label>
+                                        <div class="form-group row" style="margin-bottom: 25px;">
+                                            <label class="col-md-4 control-label">Manage Stock?
+                                            </label>
                                             <div class="col-md-4" style="display: flex; font-size: 12px;">
-                                                <mat-checkbox> <i>Enable stock management at product level</i></mat-checkbox>
+                                                <mat-checkbox  id="manageStock" formControlName="manageStock"> <i>Enable stock management at product level</i></mat-checkbox>
                                             </div>
                                         </div>
 
                                         <!-- Select Basic -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="stock_status">Stock Status</label>
+                                            <label class="col-md-4 control-label" for="stock_status">Stock Status<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <select id="stock_status" name="stock-status" class="form-control">
-                                                    <option>Select</option>
-                                                    <option>In Stock</option>
-                                                    <option>Out Of Stock</option>
-                                                    <option>On Backorder</option>
+                                                <select id="stockStatusId" formControlName="stockStatusId" class="form-control">
+                                                    <option value="0">Select</option>
+                                                    <option *ngFor="let stl of stockStatusList" [value]="stl.id">{{stl.status}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Controls whether or not the product is listed as "In Stock" or "Out
+                                                    <p>Controls whether or not the product is listed as "In Stock" or
+                                                        "Out
                                                         Of Stock" on the frontend.</p>
                                                 </div>
                                             </div>
@@ -185,10 +197,12 @@
 
                                         <!-- Checkbox-->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="slod_individually">Sold Individually
+                                            <label class="col-md-4 control-label" for="slod_individually">Sold
+                                                Individually
                                             </label>
                                             <div class="col-md-4" style="display: flex; font-size: 12px;">
-                                                <mat-checkbox> <i>Enable this to only of this item to be bought in a single
+                                                <mat-checkbox id="soldIndv" formControlName="soldIndv" > <i>Enable this to only of this item to be bought in a
+                                                        single
                                                         order
                                                     </i></mat-checkbox>
 
@@ -198,7 +212,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +220,7 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Shipping">
+                    <mat-tab label="Shipping" [disabled]="shippingTab">
                         <div class="tab-content">
                             <form class="form-horizontal container">
                                 <fieldset>
@@ -214,7 +228,8 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="weight">Weight (Kg)</label>
                                             <div class="col-md-4">
-                                                <input id="weight" name="weight" placeholder="0" class="form-control input-md" required="" type="text">
+                                                <input id="weight" name="weight" placeholder="0" class="form-control input-md"
+                                                    required="" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -227,12 +242,12 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="dimensions">Dimensions (cm)</label>
                                             <div class="col-md-4" style="display:flex;">
-                                                <input id="dimensions" name="dimensions" placeholder="LENGTH" class="form-control input-md" style="width:32%;margin-right:5px;"
-                                                    required="" type="text">
-                                                <input id="dimensions" name="dimensions" placeholder="WIDTH" class="form-control input-md" style="width:32%;margin-right:5px;"
-                                                    required="" type="text">
-                                                <input id="dimensions" name="dimensions" placeholder="HEIGHT" class="form-control input-md" style="width:32%;" required=""
-                                                    type="text">
+                                                <input id="dimensions" name="dimensions" placeholder="LENGTH" class="form-control input-md"
+                                                    style="width:32%;margin-right:5px;" required="" type="text">
+                                                <input id="dimensions" name="dimensions" placeholder="WIDTH" class="form-control input-md"
+                                                    style="width:32%;margin-right:5px;" required="" type="text">
+                                                <input id="dimensions" name="dimensions" placeholder="HEIGHT" class="form-control input-md"
+                                                    style="width:32%;" required="" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -250,7 +265,8 @@
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Shipping classes are used by certain shipping methods to group similar
+                                                    <p>Shipping classes are used by certain shipping methods to group
+                                                        similar
                                                         products.
                                                     </p>
                                                 </div>
@@ -268,7 +284,7 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Linked Products">
+                    <mat-tab label="Linked Products" [disabled]="linkedProductsTab">
                         <div class="tab-content">
                             <form class="form-horizontal container">
                                 <fieldset>
@@ -276,12 +292,15 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="upsells">Upsells</label>
                                             <div class="col-md-4">
-                                                <input id="upsells" name="upsells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md" required="" type="text">
+                                                <input id="upsells" name="upsells" placeholder="SEARCH FOR A PRODUCT"
+                                                    class="form-control input-md" required="" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Upsells are the products which you recommend instead of the currently
-                                                        viewed product, for example,products that are more profitable or
+                                                    <p>Upsells are the products which you recommend instead of the
+                                                        currently
+                                                        viewed product, for example,products that are more profitable
+                                                        or
                                                         better quality or more expensive.</p>
                                                 </div>
                                             </div>
@@ -291,11 +310,13 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="cross_sells">Cross-Sells</label>
                                             <div class="col-md-4">
-                                                <input id="cross_sells" name="cross_sells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md" required="" type="text">
+                                                <input id="cross_sells" name="cross_sells" placeholder="SEARCH FOR A PRODUCT"
+                                                    class="form-control input-md" required="" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
-                                                    <p>Cross-sells are product which you promote in the cart, based on the
+                                                    <p>Cross-sells are product which you promote in the cart, based on
+                                                        the
                                                         current product.</p>
                                                 </div>
                                             </div>
@@ -313,7 +334,7 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Attributes">
+                    <mat-tab label="Attributes" [disabled]="attributesTab">
                         <div class="tab-content">
                             <form class="form-horizontal container">
                                 <fieldset>
@@ -358,7 +379,7 @@
                             </form>
                         </div>
                     </mat-tab>
-                    <mat-tab label="Tags">
+                    <mat-tab label="Tags" [disabled]="tagsTab">
                         <div class="tab-content">
                             <form class="form-horizontal container">
                                 <fieldset>
@@ -420,7 +441,7 @@
             </div>
         </div>
         <div class="sbt-btn-div">
-                <button mat-raised-button color="primary" class="sbt-btn">Submit</button>
+            <button mat-raised-button color="primary" class="sbt-btn">Submit</button>
         </div>
     </div>
 </div>
