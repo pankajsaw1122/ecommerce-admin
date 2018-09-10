@@ -25,7 +25,7 @@ export class AddProductsComponent implements OnInit {
     generalForm: FormGroup;
     priceForm: FormGroup;
     inventoryForm: FormGroup;
-
+    shippingForm: FormGroup;
     // studentImage: File = null;
     // imageId: String;
     // upload = null;
@@ -94,7 +94,7 @@ export class AddProductsComponent implements OnInit {
             'taxStatusId': new FormControl(0),
             'taxClassId': new FormControl(0)
         });
-
+        // Inventory Data
         this.apiService.getStockStatus().subscribe((response: any) => {
             console.log(response);
             this.stockStatusList = response.data;
@@ -106,6 +106,19 @@ export class AddProductsComponent implements OnInit {
             'stockStatusId': new FormControl(0, Validators.required),
             'soldIndv': new FormControl(false)
         });
+
+        // Shipping tab data
+        
+
+        // Shipping Tab
+        this.shippingForm = new FormGroup({
+            'weight': new FormControl(''),
+            'dimensionLength': new FormControl(false),
+            'dimensionWidth': new FormControl(0, Validators.required),
+            'dimensionHeight': new FormControl(false),
+            'shippingClassId': new FormControl(false),
+        });
+
 
     }
 
