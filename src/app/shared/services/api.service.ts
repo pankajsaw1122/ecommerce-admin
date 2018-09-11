@@ -81,6 +81,18 @@ export class ApiService {
     })).pipe(catchError(this.handleError));
   }
 
+  getTags(): Observable<any> {
+    return this.http.get(this.apiUrl + 'products/getTags').pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  saveProduct(data): Observable<any> {
+    return this.http.post(this.apiUrl + 'products/addProduct', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
 
   testApi(): Observable<any> {
     console.log('test Api called');

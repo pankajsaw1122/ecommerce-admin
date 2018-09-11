@@ -17,7 +17,7 @@
                                             <div class="col-md-4">
                                                 <select id="departmentId" formControlName="departmentId" (change)="onDepartemntChange($event.target.value)"
                                                     class="form-control">
-                                                    <option value="0"> Select Department</option>
+                                                    <option value=""> Select Department</option>
                                                     <option *ngFor="let dpt of departmentsList" [value]="dpt.id">{{dpt.name}}</option>
                                                 </select>
                                             </div>
@@ -28,7 +28,7 @@
                                             <div class="col-md-4">
                                                 <select id="subDepartmentId" formControlName="subDepartmentId" (change)="onSubDepartemntChange($event.target.value)"
                                                     placeholder="Select" class="form-control">
-                                                    <option value="0"> Select Category </option>
+                                                    <option value=""> Select Category </option>
                                                     <option *ngFor="let sdt of subDepartmentsList" [value]="sdt.id">{{sdt.name}}</option>
                                                 </select> </div>
                                         </div>
@@ -37,7 +37,7 @@
                                             <label class="col-md-4 control-label"> Sub Category<span class="error"> *</span></label>
                                             <div class="col-md-4">
                                                 <select id="subCategoryId" formControlName="subCategoryId" class="form-control">
-                                                    <option value="0">Select Sub Category</option>
+                                                    <option value="">Select Sub Category</option>
                                                     <option *ngFor="let sc of subCategoriesList" [value]="sc.id">{{sc.name}}</option>
                                                 </select> </div>
                                         </div>
@@ -55,7 +55,7 @@
                                             <label class="col-md-4 control-label">Product Brand</label>
                                             <div class="col-md-4">
                                                 <select id="brandId" formControlName="brandId" class="form-control">
-                                                    <option value="0">Select Brand</option>
+                                                    <option value="">Select Brand</option>
                                                     <option *ngFor="let bd of brandsList" [value]="bd.id">{{bd.name}}</option>
                                                 </select>
                                             </div>
@@ -106,7 +106,7 @@
                                             <label class="col-md-4 control-label" for="tax_status">Tax Status</label>
                                             <div class="col-md-4">
                                                 <select id="taxStatusId" formControlName="taxStatusId" class="form-control">
-                                                    <option value="0">Select</option>
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let tsl of taxStatusList" [value]="tsl.id">{{tsl.name}}</option>
                                                 </select>
                                             </div>
@@ -123,7 +123,7 @@
                                             <label class="col-md-4 control-label" for="tax_class">Tax Class</label>
                                             <div class="col-md-4">
                                                 <select id="taxClassId" formControlName="taxClassId" class="form-control">
-                                                    <option value="0">Select</option>
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let tcl of taxClassList" [value]="tcl.id">{{tcl.name}}</option>
                                                 </select>
                                             </div>
@@ -156,7 +156,7 @@
                                             <label class="col-md-4 control-label">SKU</label>
                                             <div class="col-md-4">
                                                 <input id="sku" formControlName="sku" placeholder="SKU" class="form-control input-md"
-                                                    required="" type="text">
+                                                    type="text">
 
                                             </div>
                                             <div class="col-1 help-cont">
@@ -179,10 +179,10 @@
 
                                         <!-- Select Basic -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="stock_status">Stock Status<span class="error"> *</span></label>
+                                            <label class="col-md-4 control-label">Stock Status<span class="error"> *</span></label>
                                             <div class="col-md-4">
                                                 <select id="stockStatusId" formControlName="stockStatusId" class="form-control">
-                                                    <option value="0">Select</option>
+                                                    <option value="">Select</option>
                                                     <option *ngFor="let stl of stockStatusList" [value]="stl.id">{{stl.status}}</option>
                                                 </select>
                                             </div>
@@ -208,9 +208,10 @@
 
                                             </div>
                                         </div>
+                                        <p *ngIf="!formValid" class="error">*Please fill all required fields</p>
                                         <!-- Button -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                                            <label class="col-md-4 control-label"></label>
                                             <div class="col-md-4 next-btn">
                                                 <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
@@ -222,14 +223,14 @@
                     </mat-tab>
                     <mat-tab label="Shipping" [disabled]="shippingTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form class="form-horizontal container" [formGroup]="shippingForm" (ngSubmit)="shippingSubmit()">
                                 <fieldset>
                                     <div class="vertical_post check_box_agile">
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="weight">Weight (Kg)</label>
+                                            <label class="col-md-4 control-label" for="weight">Weight (Kg)<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <input id="weight" name="weight" placeholder="0" class="form-control input-md"
-                                                    required="" type="text">
+                                                <input id="weight" formControlName="weight" placeholder="0" class="form-control input-md"
+                                                 type="number">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -242,12 +243,12 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="dimensions">Dimensions (cm)</label>
                                             <div class="col-md-4" style="display:flex;">
-                                                <input id="dimensions" name="dimensions" placeholder="LENGTH" class="form-control input-md"
-                                                    style="width:32%;margin-right:5px;" required="" type="text">
-                                                <input id="dimensions" name="dimensions" placeholder="WIDTH" class="form-control input-md"
-                                                    style="width:32%;margin-right:5px;" required="" type="text">
-                                                <input id="dimensions" name="dimensions" placeholder="HEIGHT" class="form-control input-md"
-                                                    style="width:32%;" required="" type="text">
+                                                <input id="dimensionsLength" formControlName="dimensionLength" placeholder="LENGTH" class="form-control input-md"
+                                                    style="width:32%;margin-right:5px;" type="text">
+                                                <input id="dimensionsWidth" formControlName="dimensionWidth" placeholder="WIDTH" class="form-control input-md"
+                                                    style="width:32%;margin-right:5px;" type="text">
+                                                <input id="dimensionsHeight" formControlName="dimensionHeight" placeholder="HEIGHT" class="form-control input-md"
+                                                    style="width:32%;" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -257,10 +258,10 @@
                                         </div>
                                         <!-- Select Basic -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="shipping_class">Shipping Class</label>
+                                            <label class="col-md-4 control-label">Shipping Class</label>
                                             <div class="col-md-4">
-                                                <select id="shipping_class" name="shipping_class" class="form-control">
-                                                    <option>No Shipping Class</option>
+                                                <select id="shippingClassId" formControlName="shippingClassId" class="form-control">
+                                                    <option value="">No Shipping Class</option>
                                                 </select>
                                             </div>
                                             <div class="col-1 help-cont">
@@ -272,11 +273,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <p *ngIf="!formValid" class="error">*Please fill all required fields</p>
                                         <!-- Button -->
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -286,14 +288,14 @@
                     </mat-tab>
                     <mat-tab label="Linked Products" [disabled]="linkedProductsTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form [formGroup]="linkedProductForm" (ngSubmit)="linkedProduct()" class="form-horizontal container">
                                 <fieldset>
                                     <div class="vertical_post check_box_agile">
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="upsells">Upsells</label>
                                             <div class="col-md-4">
-                                                <input id="upsells" name="upsells" placeholder="SEARCH FOR A PRODUCT"
-                                                    class="form-control input-md" required="" type="text">
+                                                <input id="upsells" formControlName="upsells" placeholder="SEARCH FOR A PRODUCT"
+                                                    class="form-control input-md" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -308,10 +310,10 @@
 
                                         <!-- Text input-->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="cross_sells">Cross-Sells</label>
+                                            <label class="col-md-4 control-label">Cross-Sells</label>
                                             <div class="col-md-4">
-                                                <input id="cross_sells" name="cross_sells" placeholder="SEARCH FOR A PRODUCT"
-                                                    class="form-control input-md" required="" type="text">
+                                                <input id="crossSells" formControlName="crossSells" placeholder="SEARCH FOR A PRODUCT"
+                                                    class="form-control input-md" type="text">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -321,12 +323,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <p *ngIf="!formValid" class="error">*Please fill all required fields</p>
 
                                         <!-- Button -->
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
                                             </div>
                                         </div>
                                     </div>
@@ -336,32 +339,32 @@
                     </mat-tab>
                     <mat-tab label="Attributes" [disabled]="attributesTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form [formGroup]="attributesForm" (ngSubmit)="attributesSubmit()" class="form-horizontal container">
                                 <fieldset>
                                     <div class="vertical_post check_box_agile">
                                         <!-- Textarea -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="long_desc">Long Description</label>
+                                            <label class="col-md-4 control-label">Long Description</label>
                                             <div class="col-md-4">
-                                                <textarea class="form-control" id="long_desc" name="long_desc"></textarea>
+                                                <textarea class="form-control" id="longDescription" formControlName="longDescription"></textarea>
                                             </div>
                                         </div>
                                         <!-- Textarea -->
 
                                         <!-- Textarea -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="add-info">Additional Information</label>
+                                            <label class="col-md-4 control-label">Additional Information</label>
                                             <div class="col-md-4">
-                                                <textarea class="form-control" id="add-info" name="add-info"></textarea>
+                                                <textarea class="form-control" id="additionalInfo" formControlName="additionalInfo"></textarea>
                                             </div>
                                         </div>
                                         <!-- Textarea -->
 
                                         <!-- Textarea -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 control-label" for="help">Help</label>
+                                            <label class="col-md-4 control-label">Help</label>
                                             <div class="col-md-4">
-                                                <textarea class="form-control" id="help" name="help"></textarea>
+                                                <textarea class="form-control" id="help" formControlName="help"></textarea>
                                             </div>
                                         </div>
                                         <!-- Textarea -->
@@ -370,7 +373,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Next</button>
+                                                <button mat-raised-button color="primary" type="submit">Next</button>
 
                                             </div>
                                         </div>
@@ -381,7 +384,7 @@
                     </mat-tab>
                     <mat-tab label="Tags" [disabled]="tagsTab">
                         <div class="tab-content">
-                            <form class="form-horizontal container">
+                            <form [formGroup]="tagsForm" (ngSubmit)="saveProduct()" class="form-horizontal container">
                                 <fieldset>
                                     <div class="vertical_post check_box_agile">
 
@@ -389,11 +392,9 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="product_categorie">Tags</label>
                                             <div class="col-md-4">
-                                                <select id="product_categorie" name="product_categorie" class="form-control">
-                                                    <option>Select Tag</option>
-                                                    <option>New</option>
-
-                                                    <option>Off</option>
+                                                <select id="tagId" formControlName="tagId" class="form-control">
+                                                    <option value="">Select Tag</option>
+                                                    <option *ngFor="let tgl of tagsList" [value]="tgl.id">{{tgl.tag}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -401,7 +402,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary">Save</button>
+                                                <button mat-raised-button color="primary" type="submit">Save</button>
                                             </div>
                                         </div>
                                     </div>
