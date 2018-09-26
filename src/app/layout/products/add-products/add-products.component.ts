@@ -3,6 +3,9 @@ import { routerTransition } from '../../../router.animations';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../shared/services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { HttpHeaders } from '@angular/common/http';
 @Component({
     selector: 'app-add-products',
     templateUrl: './add-products.component.html',
@@ -19,6 +22,7 @@ export class AddProductsComponent implements OnInit {
     attributesTab = true;
     tagsTab = true;
     selectedTab: Number = 0;
+    productSaved = false;
 
     // Form Groups
     formValid = true;
@@ -40,6 +44,7 @@ export class AddProductsComponent implements OnInit {
     tagsList = [];
 
     productData = {
+        accessToken: 'dEStSa4Jd52b',
         departmentId: 0,
         subDepartmentId: 0,
         subCategoryId: 0,
@@ -59,25 +64,37 @@ export class AddProductsComponent implements OnInit {
         dimensionWidth: 0,
         dimensionHeight: 0,
         shippingClassId: 0,
-        upsells: 0,
-        crossSells: 0,
+        upsells: '',
+        crossSells: '',
         longDescription: '',
         additionalInfo: '',
         help: '',
-        tagId: 0,
+        tagId: 0
     };
-
-    constructor(private apiService: ApiService, private router: Router) { }
+    productResult = {
+        departmentId: '',
+        subDepartmentId: '',
+        productId: ''
+    };
+    mainImage: File = null;
+    auxillaryImage: File = null;
+    mainImageUploaded = false;
+    auxillaryImageUploaded = false;
+    constructor(public dialog: MatDialog, private apiService: ApiService, private router: Router) { }
 
     ngOnInit() {
         // General Tab data
         this.apiService.getDepartments().subscribe((response: any) => {
             console.log(response);
-            this.departmentsList = response.data;
+            if (response.status === 200) {
+                this.departmentsList = response.data;
+            }
         });
         this.apiService.getBrands().subscribe((response: any) => {
             console.log(response);
-            this.brandsList = response.data;
+            if (response.status === 200) {
+                this.brandsList = response.data;
+            }
         });
 
         this.generalForm = new FormGroup({
@@ -93,11 +110,15 @@ export class AddProductsComponent implements OnInit {
 
         this.apiService.getTaxStatus().subscribe((response: any) => {
             console.log(response);
-            this.taxStatusList = response.data;
+            if (response.status === 200) {
+                this.taxStatusList = response.data;
+            }
         });
         this.apiService.getTaxClass().subscribe((response: any) => {
             console.log(response);
-            this.taxClassList = response.data;
+            if (response.status === 200) {
+                this.taxClassList = response.data;
+            }
         });
         this.priceForm = new FormGroup({
             'regularPrice': new FormControl('', Validators.required),
@@ -108,7 +129,9 @@ export class AddProductsComponent implements OnInit {
         // Inventory Data
         this.apiService.getStockStatus().subscribe((response: any) => {
             console.log(response);
-            this.stockStatusList = response.data;
+            if (response.status === 200) {
+                this.stockStatusList = response.data;
+            }
         });
         // inventoryForm
         this.inventoryForm = new FormGroup({
@@ -123,9 +146,9 @@ export class AddProductsComponent implements OnInit {
         // Shipping Tab
         this.shippingForm = new FormGroup({
             'weight': new FormControl('', Validators.required),
-            'dimensionLength': new FormControl(''),
-            'dimensionWidth': new FormControl(''),
-            'dimensionHeight': new FormControl(''),
+            'dimensionLength': new FormControl(0),
+            'dimensionWidth': new FormControl(0),
+            'dimensionHeight': new FormControl(0),
             'shippingClassId': new FormControl(''),
         });
 
@@ -141,7 +164,9 @@ export class AddProductsComponent implements OnInit {
 
         this.apiService.getTags().subscribe((response: any) => {
             console.log(response);
-            this.tagsList = response.data;
+            if (response.status === 200) {
+                this.tagsList = response.data;
+            }
         });
         this.tagsForm = new FormGroup({
             'tagId': new FormControl('')
@@ -149,9 +174,9 @@ export class AddProductsComponent implements OnInit {
     }
 
     // General Form Data
-    onDepartemntChange(id) {
+    onDepartmentChange(id) {
         console.log('onDepartemntChange called' + id);
-        this.apiService.getSubDepartemnts(id).subscribe((response: any) => {
+        this.apiService.getSubDepartments(id).subscribe((response: any) => {
             console.log(response);
             this.subDepartmentsList = response.data;
         });
@@ -181,8 +206,8 @@ export class AddProductsComponent implements OnInit {
         if (this.generalForm.get('subDepartmentId').value !== '') {
             this.productData.subDepartmentId = this.generalForm.get('subDepartmentId').value;
         }
-        if (this.generalForm.get('subDepartmentId').value !== '') {
-            this.productData.subDepartmentId = this.generalForm.get('subDepartmentId').value;
+        if (this.generalForm.get('subCategoryId').value !== '') {
+            this.productData.subCategoryId = this.generalForm.get('subCategoryId').value;
         }
         this.productData.productName = this.generalForm.get('productName').value;
         if (this.generalForm.get('brandId').value !== '') {
@@ -309,28 +334,121 @@ export class AddProductsComponent implements OnInit {
         }
         this.apiService.saveProduct(this.productData).subscribe((response: any) => {
             console.log(response);
+            if (response.status === 200) {
+                this.productResult.departmentId = response.data.departmentId;
+                this.productResult.subDepartmentId = response.data.subDepartmentId;
+                this.productResult.productId = response.data.insertId;
+                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                    width: '40%',
+                    data: 'Product details saved successfully. Please upload product images now'
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                    console.log('Dialog closed');
+                });
+                this.productSaved = true;
+            }
+        });
+        // this.generalForm.reset();
+    }
+
+    mainImageUpload(event) {
+        this.mainImage = <File>event.target.files[0];
+        console.log(this.mainImage);
+        const fd = new FormData;
+        fd.append('image', this.mainImage, this.mainImage.name);
+        fd.append('data', JSON.stringify(this.productResult));
+        // fd.append('categoryId', categoryId)
+        console.log(fd);
+        this.apiService.mainImageUpload(fd).subscribe((data: any) => {
+            console.log(data);
+            if (data.status === 200 || data.status === '200') {
+                console.log('upload Successful');
+                this.mainImageUploaded = true;
+            } else {
+            }
         });
     }
 
-    onFileSelect(event) {
-        // this.upload = 2;
-        // this.studentImage = <File>event.target.files[0];
-        // console.log(this.studentImage);
-        // const fd = new FormData;
-        // fd.append('image', this.studentImage, this.studentImage.name);
-        // console.log(fd);
-        // this.apiService.studentImageUpload(fd).subscribe((data: any) => {
-        //     console.log(data);
-        //     if (data.status === 105 || data.status === '105') {
-        //         console.log('upload Successful');
-        //         this.imageId = data.imageId;
-        //         this.upload = 1;
-        //         // setTimeout(() => { this.uploadSuccess = false; }, 3000);
-        //     } else {
-        //         this.upload = 0;
-        //         // setTimeout(() => { this.uploadFailed = false; }, 3000);
-        //     }
-        // });
+    auxillaryImageUpload(event) {
+        this.auxillaryImage = <File>event.target.files[0];
+        console.log(this.auxillaryImage);
+        const fd = new FormData;
+        fd.append('image', this.auxillaryImage, this.auxillaryImage.name);
+        fd.append('data', JSON.stringify(this.productResult));
+        // fd.append('categoryId', categoryId)
+        console.log(fd);
+        this.apiService.auxillaryImageUpload(fd).subscribe((data: any) => {
+            console.log(data);
+            if (data.status === 200 || data.status === '200') {
+                console.log('upload Successful');
+                this.auxillaryImageUploaded = true;
+            } else {
+            }
+        });
     }
-
+    submitProduct() {
+        if (this.mainImageUploaded === true && this.auxillaryImageUploaded === true) {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '40%',
+                data: 'Product saved successfully.'
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log('Dialog closed');
+            });
+            this.priceTab = true;
+            this.inventoryTab = true;
+            this.shippingTab = true;
+            this.linkedProductsTab = true;
+            this.attributesTab = true;
+            this.tagsTab = true;
+            this.selectedTab = 0;
+            this.productSaved = false;
+            this.productData = {
+                accessToken: 'dEStSa4Jd52b',
+                departmentId: 0,
+                subDepartmentId: 0,
+                subCategoryId: 0,
+                productName: '',
+                brandId: 0,
+                description: '',
+                regularPrice: 0,
+                salePrice: 0,
+                taxStatusId: 0,
+                taxClassId: 0,
+                sku: '',
+                manageStock: 0,
+                stockStatusId: 0,
+                soldIndv: 0,
+                weight: 0,
+                dimensionLength: 0,
+                dimensionWidth: 0,
+                dimensionHeight: 0,
+                shippingClassId: 0,
+                upsells: '',
+                crossSells: '',
+                longDescription: '',
+                additionalInfo: '',
+                help: '',
+                tagId: 0
+            };
+            this.productResult = {
+                departmentId: '',
+                subDepartmentId: '',
+                productId: ''
+            };
+            this.mainImage = null;
+            this.auxillaryImage = null;
+            this.mainImageUploaded = false;
+            this.auxillaryImageUploaded = false;
+            this.ngOnInit();
+        } else {
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '40%',
+                data: 'Please upload images of product.'
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log('Dialog closed');
+            });
+        }
+    }
 }

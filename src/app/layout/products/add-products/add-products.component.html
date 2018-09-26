@@ -15,7 +15,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label"> Department<span class="error"> *</span></label>
                                             <div class="col-md-4">
-                                                <select id="departmentId" formControlName="departmentId" (change)="onDepartemntChange($event.target.value)"
+                                                <select id="departmentId" formControlName="departmentId" (change)="onDepartmentChange($event.target.value)"
                                                     class="form-control">
                                                     <option value=""> Select Department</option>
                                                     <option *ngFor="let dpt of departmentsList" [value]="dpt.id">{{dpt.name}}</option>
@@ -244,11 +244,11 @@
                                             <label class="col-md-4 control-label" for="dimensions">Dimensions (cm)</label>
                                             <div class="col-md-4" style="display:flex;">
                                                 <input id="dimensionsLength" formControlName="dimensionLength" placeholder="LENGTH" class="form-control input-md"
-                                                    style="width:32%;margin-right:5px;" type="text">
+                                                    style="width:32%;margin-right:5px;" type="number">
                                                 <input id="dimensionsWidth" formControlName="dimensionWidth" placeholder="WIDTH" class="form-control input-md"
-                                                    style="width:32%;margin-right:5px;" type="text">
+                                                    style="width:32%;margin-right:5px;" type="number">
                                                 <input id="dimensionsHeight" formControlName="dimensionHeight" placeholder="HEIGHT" class="form-control input-md"
-                                                    style="width:32%;" type="text">
+                                                    style="width:32%;" type="number">
                                             </div>
                                             <div class="col-1 help-cont">
                                                 <div class="help-tip">
@@ -402,7 +402,7 @@
                                         <div class="form-group row">
                                             <label class="col-md-4 control-label" for="singlebutton"></label>
                                             <div class="col-md-4 next-btn">
-                                                <button mat-raised-button color="primary" type="submit">Save</button>
+                                                <button mat-raised-button color="primary" type="submit" [disabled]="productSaved">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -415,34 +415,33 @@
         </div>
         <br />
 
-        <div class="card card-marg">
+        <div *ngIf="productSaved" class="card card-marg">
             <div class="card-block">
                 <div class="tab-pad">
-                    <form class="form-horizontal container">
+                    <form class="form-horizontal container" enctype="multipart/form-data">
                         <fieldset>
                             <!-- File Button -->
                             <div class="form-group row">
                                 <label class="col-md-4 control-label" for="filebutton">Main Image</label>
                                 <div class="col-md-4">
-                                    <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                    <input id="mainImage" name="mainImage" (change)="mainImageUpload($event)" class="input-file" type="file">
                                 </div>
                             </div>
                             <!-- File Button -->
                             <div class="form-group row">
                                 <label class="col-md-4 control-label" for="filebutton">Auxilary Images</label>
                                 <div class="col-md-4">
-                                    <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                    <input id="auxillaryImage" name="auxillaryImage" (change)="auxillaryImageUpload($event)" class="input-file" type="file">
                                 </div>
                             </div>
                             <!-- //product-image// -->
-
                         </fieldset>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="sbt-btn-div">
-            <button mat-raised-button color="primary" class="sbt-btn">Submit</button>
+        <div *ngIf="productSaved" class="sbt-btn-div">
+            <button mat-raised-button color="primary" (click)="submitProduct()" class="sbt-btn">Submit</button>
         </div>
     </div>
 </div>

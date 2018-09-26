@@ -1,0 +1,261 @@
+<div id="product-update-container">
+  <div class="card">
+    <div class="card-header">Edit/Update <span class="close-icon" (click)="dialogRef.close(false)"><mat-icon>close</mat-icon></span></div>
+    <div class="card-body msg-body" mat-dialog-content>
+      <div class="container-fluid">
+        <form [formGroup]="updateForm" (ngSubmit)="updateProduct()" class="row">
+          <div class="col-md-12">
+            <div class="form-head">General</div>
+            <fieldset>
+              <div class="form-content row">
+                <div class="form-group col-3">
+                  <label> Department</label>
+                  <select id="departmentId" formControlName="departmentId" (change)="onDepartmentChange($event.target.value)"
+                    class="form-control">
+                    <option value=""> Select Department</option>
+                    <option *ngFor="let dpt of departmentsList" [value]="dpt.id" [selected]="dpt.id == data.departmentId">{{dpt.name}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-3">
+                  <label> Category</label>
+                  <select id="subDepartmentId" formControlName="subDepartmentId" (change)="onSubDepartemntChange($event.target.value)"
+                    placeholder="Select" class="form-control">
+                    <option value=""> Select Category </option>
+                    <option *ngFor="let sdt of subDepartmentsList" [value]="sdt.id" [selected]="sdt.id == data.subDepartmentId">{{sdt.name}}</option>
+                  </select>
+                </div>
+
+                <div *ngIf="subCategoriesList != ''" class="form-group col-3">
+                  <label> Sub Category</label>
+                  <select id="subCategoryId" formControlName="subCategoryId" class="form-control">
+                    <option value="">Select Sub Category</option>
+                    <option *ngFor="let sc of subCategoriesList" [value]="sc.id" [selected]="sc.id == data.subCategory">{{sc.name}}</option>
+                  </select>
+                </div>
+                <!-- Text input-->
+                <div class="form-group col-3 ">
+                  <label>Product Name</label>
+                  <input id="productName" formControlName="productName" placeholder="PRODUCT NAME" class="form-control input-md"
+                    type="text">
+                  <!-- <span *ngIf="!generalForm.get('productName').valid && generalForm.get('productName').touched">Please enter product name</span> -->
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Product Brand</label>
+                  <select id="brandId" formControlName="brandId" class="form-control">
+                    <option value="">Select Brand</option>
+                    <option *ngFor="let bd of brandsList" [value]="bd.id" [selected]="bd.id == data.brandId">{{bd.name}}</option>
+                  </select>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group col-3">
+                  <label>Product Description</label>
+                  <textarea id="description" formControlName="description" class="form-control"></textarea>
+                </div>
+                <!-- Textarea -->
+                <!-- Button -->
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Price</div>
+            <fieldset>
+              <div class="form-content row">
+                <div class="form-group col-3">
+                  <label>Regular Price ($)<span class="error"> *</span></label>
+                  <input id="regularPrice" formControlName="regularPrice" placeholder="REGULAR PRICE" class="form-control input-md"
+                    required="" type="number">
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group col-3">
+                  <label>Sale Price ($)<span class="error"> *</span></label>
+                  <input id="salePrice" formControlName="salePrice" placeholder="SALE PRICE" class="form-control input-md"
+                    type="number">
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Tax Status</label>
+                  <select id="taxStatusId" formControlName="taxStatusId" class="form-control">
+                    <option value="">Select</option>
+                    <option *ngFor="let tsl of taxStatusList" [value]="tsl.id">{{tsl.name}}</option>
+                  </select>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Tax Class</label>
+                  <select id="taxClassId" formControlName="taxClassId" class="form-control">
+                    <option value="">Select</option>
+                    <option *ngFor="let tcl of taxClassList" [value]="tcl.id">{{tcl.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Inventory</div>
+            <fieldset>
+              <div class="form-content row">
+                <div class="form-group col-3">
+                  <label>SKU</label>
+                  <input id="sku" formControlName="sku" placeholder="SKU" class="form-control input-md" type="text">
+                </div>
+
+                <!-- Checkbox-->
+                <div class="form-group col-3" style="margin-bottom: 25px;">
+                  <label>Manage Stock?</label>
+                  <div style="display: flex; font-size: 12px;">
+                    <mat-checkbox id="manageStock" formControlName="manageStock"> <i class="braek-text">Enable stock
+                        management at product
+                        level</i></mat-checkbox>
+                  </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Stock Status<span class="error"> *</span></label>
+                  <select id="stockStatusId" formControlName="stockStatusId" class="form-control">
+                    <option value="">Select</option>
+                    <option *ngFor="let stl of stockStatusList" [value]="stl.id">{{stl.status}}</option>
+                  </select>
+                </div>
+
+                <!-- Checkbox-->
+                <div class="form-group col-3">
+                  <label class="control-label" for="slod_individually">Sold
+                    Individually
+                  </label>
+                  <div style="display: flex; font-size: 12px;">
+                    <mat-checkbox id="soldIndv" formControlName="soldIndv"> <i class="braek-text">Enable this to only
+                        of this item to be
+                        bought in a
+                        single
+                        order
+                      </i></mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Shipping</div>
+            <fieldset>
+              <div class="form-content row">
+                <div class="form-group col-3">
+                  <label>Weight (Kg)<span class="error"> *</span></label>
+                  <input id="weight" formControlName="weight" placeholder="0" class="form-control input-md" type="number">
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group col-3">
+                  <label>Dimensions (cm)</label>
+                  <div style="display:flex;">
+                    <input id="dimensionsLength" formControlName="dimensionLength" placeholder="LENGTH" class="form-control input-md"
+                      style="width:32%;margin-right:5px;" type="number">
+                    <input id="dimensionsWidth" formControlName="dimensionWidth" placeholder="WIDTH" class="form-control input-md"
+                      style="width:32%;margin-right:5px;" type="number">
+                    <input id="dimensionsHeight" formControlName="dimensionHeight" placeholder="HEIGHT" class="form-control input-md"
+                      style="width:32%;" type="number">
+                  </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Shipping Class</label>
+                  <select id="shippingClassId" formControlName="shippingClassId" class="form-control">
+                    <option value="">No Shipping Class</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Linked</div>
+            <fieldset>
+              <div class="form-content row">
+                <div class="form-group col-3">
+                  <label>Upsells</label>
+                  <input id="upsells" formControlName="upsells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md"
+                    type="text">
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group col-3">
+                  <label>Cross-Sells</label>
+                  <input id="crossSells" formControlName="crossSells" placeholder="SEARCH FOR A PRODUCT" class="form-control input-md"
+                    type="text">
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Attributes</div>
+            <fieldset>
+              <div class="form-content row">
+                <!-- Textarea -->
+                <div class="form-group col-4">
+                  <label>Long Description</label>
+                  <textarea class="form-control" id="longDescription" formControlName="longDescription"></textarea>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group col-4">
+                  <label>Additional Information</label>
+                  <textarea class="form-control" id="additionalInfo" formControlName="additionalInfo"></textarea>
+                </div>
+                <!-- Textarea -->
+
+                <!-- Textarea -->
+                <div class="form-group col-4">
+                  <label>Help</label>
+                  <textarea class="form-control" id="help" formControlName="help"></textarea>
+                </div>
+                <!-- Textarea -->
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Tag</div>
+            <fieldset>
+              <div class="form-content row">
+                <!-- Select Basic -->
+                <div class="form-group col-3">
+                  <label>Tags</label>
+                  <select id="tagId" formControlName="tagId" class="form-control">
+                    <option value="">Select Tag</option>
+                    <option *ngFor="let tgl of tagsList" [value]="tgl.id">{{tgl.tag}}</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="col-md-12">
+            <div class="form-head">Product Images</div>
+            <fieldset>
+              <div class="form-content row">
+                <!-- File Button -->
+                <div class="form-group col-6">
+                  <div class="prod-image"><img [src]="data.mainImage" height="80" width="120" alt="Image"></div>
+                 
+                  <label>Main Image</label>
+                  <input id="mainImage" name="mainImage" (change)="mainImageUpload($event)" class="input-file" type="file">
+                </div>
+                <!-- File Button -->
+                <div class="form-group col-6">
+                    <div class="prod-image"><img [src]="data.auxillaryImage" height="80" width="120" alt="Image"></div>
+                  <label>Auxilary Images</label>
+                  <input id="auxillaryImage" name="auxillaryImage" (change)="auxillaryImageUpload($event)" class="input-file"
+                    type="file">
+                </div>
+                <!-- //product-image// -->
+              </div>
+            </fieldset>
+          </div>
+          <div class="update-btn"><button mat-flat-button class="btn-bg" type="submit">Update</button></div>
+          <div class="close-btn"><button mat-flat-button color="warn" type="button" (click)="dialogRef.close(false)" class="btn-bg">Close</button></div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,3 +49,12 @@
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
     background-color: #17a2b8;
 }
+
+.mat-dialog-container {
+    padding: 0px !important;
+    overflow: unset !important;
+}
+
+.mat-dialog-content {
+    margin: 0px !important;
+}

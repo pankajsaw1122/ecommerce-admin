@@ -17,11 +17,23 @@ export class ApiService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` +
+        `Backend returned code ${error.status}` +
         `body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
+  }
+
+  getProducts(data): Observable<any> {
+    console.log('test Api called');
+    return this.http.get(this.apiUrl + 'products/productList', {
+      params: {
+        departmentId: data.departmentId,
+        subDepartmentId: data.subDepartmentId
+      }
+    }).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
   }
 
   // Add products General Tab Data
@@ -32,7 +44,7 @@ export class ApiService {
     })).pipe(catchError(this.handleError));
   }
 
-  getSubDepartemnts(id):  Observable<any> {
+  getSubDepartments(id):  Observable<any> {
     console.log('test Api called');
     return this.http.get(this.apiUrl + 'categories/getSubDepartment', {
       params: {
@@ -101,6 +113,42 @@ export class ApiService {
     })).pipe(catchError(this.handleError));
   }
 
+  mainImageUpload(data): Observable<any> {
+    console.log('test Api called');
+    return this.http.post(this.apiUrl + 'upload/productMainImage', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  auxillaryImageUpload(data): Observable<any> {
+    console.log('test Api called');
+    return this.http.post(this.apiUrl + 'upload/productAuxillaryImage', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  getUpdateRequiers(id): Observable<any> {
+    console.log('test Api called');
+    return this.http.get(this.apiUrl + 'products/updateRequires', {
+      params: {
+        productId: id
+      }
+    }).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  updateProduct(data): Observable<any> {
+    console.log('test Api called');
+    return this.http.post(this.apiUrl + 'products/updateProduct', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+  deleteProduct(data): Observable<any> {
+    return this.http.post(this.apiUrl + 'products/deleteProduct', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
   // // error handling
   // private handleError(error: Response) {
   //   return Observable.throw(error.statusText);

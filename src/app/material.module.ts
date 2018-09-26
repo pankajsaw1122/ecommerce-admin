@@ -8,7 +8,7 @@ import {
      MatListModule, MatExpansionModule, MatFormFieldModule,
       MatDatepickerModule, MatRadioModule,
        MatInputModule, MatNativeDateModule, MatSelectModule,
-        MatDialogModule, MatTabsModule
+        MatDialogModule, MatTabsModule, MatPaginatorModule, MatProgressSpinnerModule
 } from '@angular/material';
 @NgModule({
     imports: [MatButtonModule,
@@ -29,7 +29,9 @@ import {
         MatNativeDateModule,
         MatSelectModule,
         MatDialogModule,
-        MatTabsModule
+        MatTabsModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule
     ],
 
     exports: [MatButtonModule,
@@ -50,7 +52,9 @@ import {
         MatNativeDateModule,
         MatSelectModule,
         MatDialogModule,
-        MatTabsModule
+        MatTabsModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule
     ]
 })
 

@@ -1,8 +1,9 @@
 <div id="confirm-box-container">
-    <h1 class="confirm-box-heading" matDialogTitle>Delete</h1>
-    <div mat-dialog-content>{{confirmMessage}}</div>
-    <div mat-dialog-actions class="pt-24">
-        <button mat-raised-button class="mat-accent mr-16 yes-button" (click)="dialogRef.close(true)">Yes</button>
-        <button mat-button (click)="dialogRef.close(false)">No</button>
+    <div class="card">
+        <div class="card-header"><mat-icon>announcement</mat-icon> Message</div>
+        <div class="card-body msg-body" mat-dialog-content>
+                {{confirmMessage}}
+            <div class="ok-btn"><button mat-flat-button class="btn-bg" (click)="dialogRef.close(false)">ok</button></div>
+        </div>
     </div>
 </div>

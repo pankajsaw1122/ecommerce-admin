@@ -59,3 +59,54 @@
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     background-color: #17a2b8 !important;
 }
+
+.example-loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+//   .example-table-container {
+//     position: relative;
+//     max-height: 400px;
+//     overflow: auto;
+//   }
+.table-container {
+    overflow-x: scroll;
+}
+  
+  table {
+    width: 100%;
+  }
+  
+  .example-rate-limit-reached {
+    color: #980000;
+    max-width: 360px;
+    text-align: center;
+  }
+
+  .prod-img {
+    padding: 4px;
+  }
+  .action-icon {
+      font-size: 18px;
+      cursor: pointer;
+  }
+  
+//   /* Column Widths */
+//   .mat-column-number,
+//   .mat-column-state {
+//     min-width: 140px;
+//     max-width: 160px;
+//   }
+  
+//   .mat-column-created {
+//     max-width: 140px;
+//   }

@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { NgModule, Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-    selector   : 'fuse-confirm-dialog',
+    selector: 'app-confirm-dialog',
     templateUrl: './confirm-dialog.component.html',
-    styleUrls  : ['./confirm-dialog.component.scss']
+    styleUrls: ['./confirm-dialog.component.scss']
 })
-export class MatDialogComponent implements OnInit
-{
+export class ConfirmDialogComponent implements OnInit {
     public confirmMessage: string;
 
-    constructor(public dialogRef: MatDialogRef<MatDialogComponent>)
-    {
+    constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    ngOnInit() {
+        this.confirmMessage = this.data;
     }
-
-    ngOnInit()
-    {
-    }
-
 }

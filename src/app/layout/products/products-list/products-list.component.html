@@ -1,71 +1,125 @@
 <div [@routerTransition]>
-  <app-page-header [heading]="'Student List'" [icon]="'fa-edit'"></app-page-header>
-  <div class="row form-outer">
-      <div class="card">
-          <div class="card-header">
-              Student List
-          </div>
-          <div class="card-block">
-              <form class="form-size">
-                  <div class="Container fluid">
-                      <div class="row form-inner">
-                          <div class="col-lg-4 col-md-4 col-sm-12">
-                              <div class="form-group">
-                                  <mat-form-field>
-                                      <mat-select placeholder="Student List by Board" [(ngModel)] = "board" name = "board" (change)="getListOfStudent($event)">
-                                          <mat-option value="">Select</mat-option>
-                                          <mat-option value="ICSE">ICSE</mat-option>
-                                          <mat-option value="CBSE">CBSE</mat-option>
-                                          <mat-option value="State Board">State Board</mat-option>
-                                      </mat-select>
-                                  </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-12">
-                              <div class="form-group">
-                                  <mat-form-field>
-                                      <mat-select [(ngModel)] = "student_class" name = "student_class" (change)="getListOfStudent($event)" placeholder="Filter Student List by Class">
-                                          <mat-option value="">Select</mat-option>
-                                          <mat-option value="IIX">IIX</mat-option>
-                                          <mat-option value="IX">IX</mat-option>
-                                          <mat-option value="X">X</mat-option>
-                                          <mat-option value="XI">XI</mat-option>
-                                          <mat-option value="XII">XII</mat-option>
-                                      </mat-select>
-                                  </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-12">
-                              <div class="form-group">
-                                  <mat-form-field>
-                                      <mat-select [(ngModel)] = "student_session" name = "student_session" (change)="getListOfStudent($event)" placeholder="Filter Student List by Session">
-                                          <mat-option value="">Select</mat-option>
-                                          <mat-option value="2018-2019">2018-2019</mat-option>
-                                          <mat-option value="2019-2020">2019-2020</mat-option>
-                                          <mat-option value="2020-2021">2020-2021</mat-option>
-                                          <mat-option value="2021-2022">2021-2022</mat-option>
-                                          <mat-option value="2022-2023">2022-2023</mat-option>
-                                          <mat-option value="2023-2024">2023-2024</mat-option>
-                                          <mat-option value="2024-2025">2024-2025</mat-option>
-                                          <mat-option value="2025-2026">2025-2026</mat-option>
-                                          <mat-option value="2026-2027">2026-2027</mat-option>
-                                          <mat-option value="2027-2028">2027-2028</mat-option>
-                                          <mat-option value="2028-2029">2028-2029</mat-option>
-                                          <mat-option value="2029-2030">2029-2030</mat-option>
-                                          <mat-option value="2030-2031">2030-2031</mat-option>
-                                          <mat-option value="2031-2032">2031-2032</mat-option>
-                                          <mat-option value="2032-2033">2032-2033</mat-option>
-                                          <mat-option value="2033-2034">2033-2034</mat-option>
-                                          <mat-option value="2034-2035">2034-2035</mat-option>
-                                      </mat-select>
-                                  </mat-form-field>
-                              </div>
-                          </div>
+    <app-page-header [heading]="'Student List'" [icon]="'fa-edit'"></app-page-header>
+    <div class="row form-outer">
+        <div class="card">
+            <div class="card-header">
+                Student List
+            </div>
+            <div class="card-block">
+                <form class="form-size">
+                    <div class="Container fluid">
+                        <div class="row form-inner">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Department List" [(ngModel)]="departmentId" name="departmentId"
+                                            (ngModelChange)="onDepartmentChange()">
+                                            <mat-option value="">Select</mat-option>
+                                            <mat-option *ngFor="let dpt of departmentsList" [value]="dpt.id">{{dpt.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <mat-select [(ngModel)]="subDepartmentId" name="subDepartmentId"
+                                            (ngModelChange)="getProductList()" placeholder="Sub Department List">
+                                            <mat-option value="">Select</mat-option>
+                                            <mat-option *ngFor="let sdt of subDepartmentsList" [value]="sdt.id">{{sdt.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="container-fluid table-container">
+                    <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+                        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+                        <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+                            No data found
+                        </div>
+                    </div>
+                    <div class="example-table-container">
+                        <mat-form-field *ngIf="resultsLength != 0">
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                          </mat-form-field>
+                        <table mat-table [dataSource]="data" class="example-table"
+                               matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+                          <!-- Number Column -->
+                          <ng-container matColumnDef="productId">
+                            <th style="width: 80px;" mat-header-cell *matHeaderCellDef>#Id</th>
+                            <td style="width: 80px;" mat-cell *matCellDef="let row">#{{row.productId}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="productName">
+                            <th style="width: 180px;" mat-header-cell *matHeaderCellDef>Product Name</th>
+                            <td style="width: 180px;" mat-cell *matCellDef="let row">{{row.productName}}</td>
+                          </ng-container>
+
+                          <!-- Title Column -->
+                          <ng-container matColumnDef="departmentName">
+                            <th style="width: 180px;" mat-header-cell *matHeaderCellDef>Department</th>
+                            <td style="width: 180px;" mat-cell *matCellDef="let row">{{row.departmentName}}</td>
+                          </ng-container>
+                    
+                          <!-- State Column -->
+                          <ng-container matColumnDef="subDepartmentName">
+                            <th style="width: 160px;" mat-header-cell *matHeaderCellDef>Category</th>
+                            <td style="width: 160px;" mat-cell *matCellDef="let row">{{row.subDepartmentName}}</td>
+                          </ng-container>
+                          
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="brand">
+                            <th style="width: 140px;" mat-header-cell *matHeaderCellDef>Brand</th>
+                            <td style="width: 140px;" mat-cell *matCellDef="let row">{{row.brand}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="regularPrice">
+                            <th style="width: 120px;" mat-header-cell *matHeaderCellDef>Regular Price</th>
+                            <td style="width: 120px;" mat-cell *matCellDef="let row">${{row.regularPrice}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="salePrice">
+                            <th style="width: 100px;" mat-header-cell *matHeaderCellDef>Sale Price</th>
+                            <td style="width: 100px;" mat-cell *matCellDef="let row">${{row.salePrice}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="stockStatus">
+                            <th style="width: 120px;" mat-header-cell *matHeaderCellDef>Stock Status </th>
+                            <td style="width: 120px;" mat-cell *matCellDef="let row">{{row.stockStatus}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="tag">
+                            <th style="width: 100px;" mat-header-cell *matHeaderCellDef>Tag</th>
+                            <td style="width: 100px;" mat-cell *matCellDef="let row">{{row.tag}}</td>
+                          </ng-container>
+
+                          <!-- Created Column -->
+                          <ng-container matColumnDef="mainImage">
+                            <th style="width: 180px;" mat-header-cell *matHeaderCellDef>Image</th>
+                            <td style="width: 180px;" mat-cell *matCellDef="let row"> <img class="prod-img" [src] = "row.mainImage" height="60" width="80" alt="Image"></td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="action">
+                            <th style="width: 140px;" mat-header-cell *matHeaderCellDef>Action</th>
+                            <td style="width: 140px;" mat-cell *matCellDef="let row"> <mat-icon class="action-icon" (click)="editProduct(row)">create</mat-icon> <mat-icon class="action-icon" (click)="deleteProduct(row.productId)">delete</mat-icon> </td>
+                          </ng-container>
+                          
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
                       </div>
-                  </div>
-              </form>
-          </div>
-      </div>
-      <br>
-  </div>
+                      <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
 </div>
