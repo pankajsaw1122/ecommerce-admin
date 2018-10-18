@@ -10,7 +10,7 @@ import { AddCategoriesComponent } from './add-categories/add-categories.componen
 
 @NgModule({
     imports: [CommonModule, CategoriesRoutingModule, PageHeaderModule, MaterialModule, FormsModule, ReactiveFormsModule ],
-    declarations: [CategoriesListComponent, AddCategoriesComponent]
+    declarations: [CategoriesListComponent, AddCategoriesComponent],
 })
 export class CategoriesModule {
 }

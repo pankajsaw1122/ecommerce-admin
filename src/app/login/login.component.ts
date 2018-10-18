@@ -20,49 +20,49 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = new FormGroup({
-            'loginEmail': new FormControl('', [Validators.required, Validators.email]),
-            'loginPassword': new FormControl('', [Validators.required]),
+            'emailOrMobile': new FormControl('', [Validators.required, Validators.email]),
+            'password': new FormControl('', [Validators.required]),
         });
     }
 
     onLoggedin() {
         console.log('logged in worked');
-        localStorage.setItem('isLoggedin', 'true');
-        this.router.navigate(['/dashboard']);
-        // console.log(this.loginForm.get('loginEmail').value);
-        // let loginData = {};
-        // loginData = { 'email_id': this.loginForm.get('loginEmail').value, 'password': this.loginForm.get('loginPassword').value };
-        // this.apiService.loginAdmin(loginData).subscribe((data: any) => {
-        //     console.log(data);
-        //     if (data.status === 105 || data.status === '105') {
-        //         this.successMessage('logging in please wait');
-        //         localStorage.setItem('isLoggedin', 'true');
-        //         localStorage.setItem('adminName', data.adminName);
-        //         localStorage.setItem('accessToken', data.accessToken);
-        //         localStorage.setItem('adminEmail', data.adminEmail);
-        //         this.router.navigate(['/dashboard']);
-        //     } else {
-        //         this.errorMessage('login failed please try again');
-        //     }
-        // });
+        if (this.loginForm.valid) {
+            this.apiService.loginAdmin(this.loginForm.value).subscribe((response: any) => {
+                console.log(response);
+                if (response.status === 200 || response.status === '200') {
+                    this.successMessage('logging in please wait');
+                    localStorage.setItem('isLoggedin', 'true');
+                    localStorage.setItem('adminName', response.data.adminName);
+                    localStorage.setItem('accessToken', response.data.accessToken);
+                    localStorage.setItem('adminEmail', response.data.adminEmail);
+                    this.router.navigate(['/dashboard']);
+                } else {
+                    this.errorMessage('login failed please try again');
+                }
+            });
+        } else {
+            this.errorMessage('Please enter your user id and password');
+
+        }
     }
-        successMessage(message) {
-            this.successMsg = true;
-            this.successMsgDisplay = message;
+    successMessage(message) {
+        this.successMsg = true;
+        this.successMsgDisplay = message;
 
-            setTimeout(() => {
-                this.successMsg = false;
-                this.successMsgDisplay = '';
-            }, 3000);
-        }
+        setTimeout(() => {
+            this.successMsg = false;
+            this.successMsgDisplay = '';
+        }, 3000);
+    }
 
-        errorMessage(message) {
-            this.errorMsg = true;
-            this.errorMsgDisplay = message;
+    errorMessage(message) {
+        this.errorMsg = true;
+        this.errorMsgDisplay = message;
 
-            setTimeout(() => {
-                this.errorMsg = false;
-                this.errorMsgDisplay = '';
-            }, 3000);
-        }
+        setTimeout(() => {
+            this.errorMsg = false;
+            this.errorMsgDisplay = '';
+        }, 3000);
+    }
 }

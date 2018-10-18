@@ -1,6 +1,6 @@
 <div id="product-update-container">
   <div class="card">
-    <div class="card-header">Edit/Update <span class="close-icon" (click)="dialogRef.close(false)"><mat-icon>close</mat-icon></span></div>
+    <div class="card-header">Edit/Update <span *ngIf="successMsg != ''" class="status-message success-message">{{successMsg}}</span> <span *ngIf="errorMsg != ''" class="status-message error-message">{{errorMsg}}</span> <span class="close-icon" (click)="dialogRef.close(false)"><mat-icon>close</mat-icon></span></div>
     <div class="card-body msg-body" mat-dialog-content>
       <div class="container-fluid">
         <form [formGroup]="updateForm" (ngSubmit)="updateProduct()" class="row">
@@ -48,6 +48,20 @@
                     <option *ngFor="let bd of brandsList" [value]="bd.id" [selected]="bd.id == data.brandId">{{bd.name}}</option>
                   </select>
                 </div>
+
+                <div class="form-group col-3">
+                    <label>Unit</label>
+                    <select id="unitId" formControlName="unitId" class="form-control">
+                      <option value="">Select Unit</option>
+                      <option *ngFor="let ul of unitList" [value]="ul.id" [selected]="ul.id == data.unitId">{{ul.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-2">
+                      <label>&nbsp;</label>
+                      <input id="unit" formControlName="unit" placeholder="Unit" class="form-control input-md"
+                        type="text">
+                      <!-- <span *ngIf="!generalForm.get('productName').valid && generalForm.get('productName').touched">Please enter product name</span> -->
+                    </div>
                 <!-- Textarea -->
                 <div class="form-group col-3">
                   <label>Product Description</label>

@@ -3,30 +3,30 @@
         <div class="bg-overlay">
             <div class="page-logo">
                 <mat-icon class="card-logo">account_circle</mat-icon>
-                <h2> Student Management System Admin Panel</h2>
+                <h2> StarMart</h2>
             </div>
             <div class="col-md-4">
                 <form [formGroup]="loginForm" (ngSubmit)="onLoggedin()">
                     <div class="form-content">
                         <div class="form-group">
-                            <input type="text" class="form-control input-underline input-lg" formControlName="loginEmail" placeholder="Email">
+                            <input type="text" class="form-control input-underline input-lg" formControlName="emailOrMobile" placeholder="Email">
                             <mat-error>
-                                <span *ngIf="!loginForm.get('loginEmail').valid && loginForm.get('loginEmail').touched">
-                            <span *ngIf="loginForm.get('loginEmail').errors['required']">Please enter valid email id </span>
+                                <span *ngIf="!loginForm.get('emailOrMobile').valid && loginForm.get('emailOrMobile').touched">
+                            <span *ngIf="loginForm.get('emailOrMobile').errors['required']">Please enter email id or mobile number </span>
                                 </span>
                             </mat-error>
                         </div>
 
                         <div class="form-group">
-                            <input type="password" class="form-control input-underline input-lg" formControlName="loginPassword" placeholder="Password">
+                            <input type="password" class="form-control input-underline input-lg" formControlName="password" placeholder="Password">
                             <mat-error>
-                                <span *ngIf="!loginForm.get('loginPassword').valid && loginForm.get('loginPassword').touched">
-                            <span *ngIf="loginForm.get('loginPassword').errors['required']">Please enter your password </span>
+                                <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+                            <span *ngIf="loginForm.get('password').errors['required']">Please enter your password </span>
                                 </span>
                             </mat-error>
                         </div>
                     </div>
-                    <button type="submit" [routerLink]="['/dashboard']" class="btn rounded-btn"> Log in </button> &nbsp;
+                    <button type="submit" class="btn rounded-btn"> Log in </button> &nbsp;
                     <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
                     <div class="alert-messages">
                         <span class="success" *ngIf = "successMsg"> {{ successMsgDisplay }}</span>

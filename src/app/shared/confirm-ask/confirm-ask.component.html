@@ -1,0 +1,11 @@
+<div id="confirm-box-container">
+    <div class="card">
+        <div class="card-header"><mat-icon>alert</mat-icon> Message</div>
+        <div class="card-body msg-body" mat-dialog-content>
+                {{confirmMessage}}
+            <div class="ok-btn"><span class="yes-btn"><button mat-flat-button class="y-btn" color="warn" (click)="dialogRef.close(true)">Yes</button></span>
+                <button mat-flat-button (click)="dialogRef.close(false)">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

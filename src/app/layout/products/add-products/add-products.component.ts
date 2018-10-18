@@ -5,7 +5,7 @@ import { ApiService } from '../../../shared/services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { HttpHeaders } from '@angular/common/http';
+
 @Component({
     selector: 'app-add-products',
     templateUrl: './add-products.component.html',
@@ -38,6 +38,7 @@ export class AddProductsComponent implements OnInit {
     subDepartmentsList = [];
     subCategoriesList: any = '';
     brandsList = [];
+    unitList = [];
     taxStatusList = [];
     taxClassList = [];
     stockStatusList = [];
@@ -50,6 +51,8 @@ export class AddProductsComponent implements OnInit {
         subCategoryId: 0,
         productName: '',
         brandId: 0,
+        unitId: 0,
+        unit: 0,
         description: '',
         regularPrice: 0,
         salePrice: 0,
@@ -96,6 +99,13 @@ export class AddProductsComponent implements OnInit {
                 this.brandsList = response.data;
             }
         });
+        this.apiService.getUnits().subscribe((response: any) => {
+            console.log(response);
+            if (response.status === 200) {
+                this.unitList = response.data;
+            }
+        });
+
 
         this.generalForm = new FormGroup({
             'departmentId': new FormControl('', Validators.required),
@@ -103,6 +113,8 @@ export class AddProductsComponent implements OnInit {
             'subCategoryId': new FormControl(''),
             'productName': new FormControl('', Validators.required),
             'brandId': new FormControl(''),
+            'unitId': new FormControl(''),
+            'unit': new FormControl(''),
             'description': new FormControl(''),
         });
 
@@ -213,6 +225,10 @@ export class AddProductsComponent implements OnInit {
         if (this.generalForm.get('brandId').value !== '') {
             this.productData.brandId = this.generalForm.get('brandId').value;
         }
+        if (this.generalForm.get('unitId').value !== '') {
+            this.productData.unitId = this.generalForm.get('unitId').value;
+        }
+        this.productData.unit = this.generalForm.get('unit').value;
         this.productData.description = this.generalForm.get('description').value;
     }
 
@@ -410,6 +426,8 @@ export class AddProductsComponent implements OnInit {
                 subCategoryId: 0,
                 productName: '',
                 brandId: 0,
+                unitId: 0,
+                unit: 0,
                 description: '',
                 regularPrice: 0,
                 salePrice: 0,

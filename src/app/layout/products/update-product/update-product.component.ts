@@ -15,6 +15,7 @@ export class UpdateProductComponent implements OnInit {
   subDepartmentsList = [];
   subCategoriesList: any = '';
   brandsList = [];
+  unitList = [];
   taxStatusList = [];
   taxClassList = [];
   stockStatusList = [];
@@ -22,6 +23,9 @@ export class UpdateProductComponent implements OnInit {
   mainImage: File = null;
   auxillaryImage: File = null;
   imageUpdateData = {};
+  showMessage = false;
+  successMsg = '';
+  errorMsg = '';
   constructor(public dialogRef: MatDialogRef<UpdateProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private apiService: ApiService) { }
 
@@ -30,7 +34,7 @@ export class UpdateProductComponent implements OnInit {
       departmentId: this.data.departmentId,
       subDepartmentId: this.data.subDepartmentId,
       productId: this.data.productId
-  };
+    };
     console.log('print passed data');
     console.log(this.data);
 
@@ -48,6 +52,12 @@ export class UpdateProductComponent implements OnInit {
       // console.log(response);
       if (response.status === 200) {
         this.brandsList = response.data;
+      }
+    });
+    this.apiService.getUnits().subscribe((response: any) => {
+      console.log(response);
+      if (response.status === 200) {
+        this.unitList = response.data;
       }
     });
     this.apiService.getTaxStatus().subscribe((response: any) => {
@@ -87,6 +97,8 @@ export class UpdateProductComponent implements OnInit {
       'subCategoryId': new FormControl(this.data.subCategoryId),
       'productName': new FormControl(this.data.productName, Validators.required),
       'brandId': new FormControl(this.data.brandId),
+      'unitId': new FormControl(this.data.unitId),
+      'unit': new FormControl(this.data.unit),
       'description': new FormControl(this.data.description),
       'regularPrice': new FormControl(this.data.regularPrice, Validators.required),
       'salePrice': new FormControl(this.data.salePrice, Validators.required),
@@ -119,16 +131,16 @@ export class UpdateProductComponent implements OnInit {
     // fd.append('categoryId', categoryId)
     console.log(fd);
     this.apiService.mainImageUpload(fd).subscribe((data: any) => {
-        console.log(data);
-        if (data.status === 200 || data.status === '200') {
-            console.log('upload Successful');
-            // this.mainImageUploaded = true;
-        } else {
-        }
+      console.log(data);
+      if (data.status === 200 || data.status === '200') {
+        console.log('upload Successful');
+        // this.mainImageUploaded = true;
+      } else {
+      }
     });
-}
+  }
 
-auxillaryImageUpload(event) {
+  auxillaryImageUpload(event) {
     this.auxillaryImage = <File>event.target.files[0];
     console.log(this.auxillaryImage);
     const fd = new FormData;
@@ -137,14 +149,14 @@ auxillaryImageUpload(event) {
     // fd.append('categoryId', categoryId)
     console.log(fd);
     this.apiService.auxillaryImageUpload(fd).subscribe((data: any) => {
-        console.log(data);
-        if (data.status === 200 || data.status === '200') {
-            console.log('upload Successful');
-            // this.auxillaryImageUploaded = true;
-        } else {
-        }
+      console.log(data);
+      if (data.status === 200 || data.status === '200') {
+        console.log('upload Successful');
+        // this.auxillaryImageUploaded = true;
+      } else {
+      }
     });
-}
+  }
 
   updateProduct() {
     console.log(this.updateForm.value);
@@ -159,6 +171,9 @@ auxillaryImageUpload(event) {
     }
     if (this.updateForm.value.brandId === '') {
       this.updateForm.value.brandId = 0;
+    }
+    if (this.updateForm.value.unitId === '') {
+      this.updateForm.value.unitId = 0;
     }
     if (this.updateForm.value.taxStatusId === '') {
       this.updateForm.value.taxStatusId = 0;
@@ -189,7 +204,23 @@ auxillaryImageUpload(event) {
       console.log(response);
       if (response.status === 200) {
         console.log('Product updated successfully');
+        this.successMessage('Product updated successfully');
+      } else {
+        this.errorMessage('error in updating data, Please try again');
       }
     });
+
+  }
+  successMessage(msg) {
+    setTimeout(() => {
+      this.successMsg = '';
+    }, 3000);
+    this.successMsg = msg;
+  }
+  errorMessage(msg) {
+    setTimeout(() => {
+      this.errorMsg = '';
+    }, 3000);
+    this.errorMsg = msg;
   }
 }

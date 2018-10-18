@@ -1,3 +1,23 @@
+
+.card-header {
+    background: gray!important;
+    color: white;
+}
+.status-message {
+    margin-left: 30%;
+}
+.success-message {
+    background-color: #b4e6b4;
+    color: #085608;
+    padding: 4px;
+    border-radius: 4px;
+}
+.error-message {
+    background-color: #f5bcbc;
+    color: #b31a1a;
+    padding: 4px;
+    border-radius: 4px;
+}
 .form-head {
     margin-top: 18px;
     margin-bottom: 12px;

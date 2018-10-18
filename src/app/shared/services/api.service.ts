@@ -24,6 +24,13 @@ export class ApiService {
     return throwError('Something bad happened; please try again later.');
   }
 
+  loginAdmin(data): Observable<any> {
+    console.log('test Api called');
+    return this.http.post(this.apiUrl + 'admin/login', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
   getProducts(data): Observable<any> {
     console.log('test Api called');
     return this.http.get(this.apiUrl + 'products/productList', {
@@ -44,7 +51,7 @@ export class ApiService {
     })).pipe(catchError(this.handleError));
   }
 
-  getSubDepartments(id):  Observable<any> {
+  getSubDepartments(id): Observable<any> {
     console.log('test Api called');
     return this.http.get(this.apiUrl + 'categories/getSubDepartment', {
       params: {
@@ -73,6 +80,12 @@ export class ApiService {
     })).pipe(catchError(this.handleError));
   }
 
+  getUnits():  Observable<any> {
+    console.log('test Api called');
+    return this.http.get(this.apiUrl + 'products/getUnits').pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
   // Add products Price tab data
 
   getTaxStatus(): Observable<any> {
@@ -146,6 +159,29 @@ export class ApiService {
   }
   deleteProduct(data): Observable<any> {
     return this.http.post(this.apiUrl + 'products/deleteProduct', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  sliderImageUpload(data): Observable<any> {
+    return this.http.post(this.apiUrl + 'upload/sliderImageUpload', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+  saveCategories(data): Observable<any> {
+    return this.http.post(this.apiUrl + 'categories/saveCategories', data).pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+
+  getCategoriesList(): Observable<any> {
+    console.log('test Api called');
+    return this.http.get(this.apiUrl + 'categories/getCategoriesList').pipe(map((response: Response) => {
+      return response;
+    })).pipe(catchError(this.handleError));
+  }
+  deleteCategory(data): Observable<any> {
+    return this.http.post(this.apiUrl + 'categories/deleteCategories', data).pipe(map((response: Response) => {
       return response;
     })).pipe(catchError(this.handleError));
   }

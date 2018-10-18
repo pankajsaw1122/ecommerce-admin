@@ -1,3 +1,68 @@
-<p>
-  categories-list works!
-</p>
+<div [@routerTransition]>
+  <app-page-header [heading]="'Categories'" [icon]="'fa-edit'"></app-page-header>
+  <div class="row form-outer">
+    <div class="card">
+      <div class="card-header">
+        Categories List
+      </div>
+      <div class="card-block">
+        <div class="container-fluid table-container">
+          <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+              No data found
+            </div>
+          </div>
+          <div class="example-table-container">
+            <mat-form-field *ngIf="resultsLength != 0">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>
+            <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="created"
+              matSortDisableClear matSortDirection="asc">
+              <!-- Number Column -->
+              <ng-container matColumnDef="id">
+                <th style="width: 80px;" mat-header-cell *matHeaderCellDef>#Id</th>
+                <td style="width: 80px;" mat-cell *matCellDef="let row">#{{row.id}}</td>
+              </ng-container>
+
+              <!-- Created Column -->
+              <ng-container matColumnDef="name">
+                <th style="width: 180px;" mat-header-cell *matHeaderCellDef>Product Name</th>
+                <td style="width: 180px;" mat-cell *matCellDef="let row">{{row.name}}</td>
+              </ng-container>
+
+              <!-- Title Column -->
+              <ng-container matColumnDef="description">
+                <th style="width: 180px;" mat-header-cell *matHeaderCellDef>Description</th>
+                <td style="width: 180px;" mat-cell *matCellDef="let row">{{row.description}}</td>
+              </ng-container>
+
+              <!-- State Column -->
+              <ng-container matColumnDef="slug">
+                <th style="width: 160px;" mat-header-cell *matHeaderCellDef>Slug</th>
+                <td style="width: 160px;" mat-cell *matCellDef="let row">{{row.slug}}</td>
+              </ng-container>
+
+              <!-- Created Column -->
+              <ng-container matColumnDef="departmentName">
+                <th style="width: 140px;" mat-header-cell *matHeaderCellDef>Parent</th>
+                <td style="width: 140px;" mat-cell *matCellDef="let row">{{row.departmentName}}</td>
+              </ng-container>
+
+              <!-- Created Column -->
+              <ng-container matColumnDef="action">
+                <th style="width: 120px;" mat-header-cell *matHeaderCellDef>Action</th>
+                <td style="width: 120px;" mat-cell *matCellDef="let row"><mat-icon class="action-icon" (click)="editProduct(row)">create</mat-icon> <mat-icon class="action-icon" (click)="deleteCategory(row.id)">delete</mat-icon></td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <mat-paginator [length]="resultsLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

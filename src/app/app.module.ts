@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { MaterialModule } from './material.module';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmAskComponent } from './shared/confirm-ask/confirm-ask.component';
+
 // AoT requires an exported function for factories
 
 import { FormsModule } from '@angular/forms';
@@ -24,8 +27,9 @@ import { FormsModule } from '@angular/forms';
         HttpClientModule,
         AppRoutingModule
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent, ConfirmDialogComponent, ConfirmAskComponent],
     providers: [AuthGuard, ApiService],
+    entryComponents: [ ConfirmDialogComponent, ConfirmAskComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
